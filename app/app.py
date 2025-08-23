@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request, redirect, url_for
 from app.controllers.menu_controller import menu_bp
 
@@ -19,4 +18,4 @@ def login():
         return render_template('index.html', mensaje_error="No se puede acceder no se han llenado los campos correctamente")
     
 if __name__=='__main__':
-    app.run(debug=True, port=5000) 
+    app.run(debug=True, port=5000)
