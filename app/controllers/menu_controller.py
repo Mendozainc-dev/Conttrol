@@ -18,4 +18,3 @@ def trabajadores():
 def contaduria():
     return render_template('contaduria.html')
 
-

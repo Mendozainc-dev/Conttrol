@@ -1,11 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style_trabajadores.css">
     <title>Trabajadores</title>
 </head>
 <body>
-    
+    <div class="trabajadores">
+        <h1>Sección de Trabajadores</h1>
+        <div class="form">Insertar un nuevo Trabajador</div>
+        {% if mensaje_succes %}
+            <div class="mensaje-succes">{{ mensaje_succes }}</div>
+        {% endif %}
+        {% if mensaje_error %}
+            <div class="mensaje-error">{{ mensaje_error }}</div>
+        {% endif %}
+        <form action="/Trabajadores" method="post" class="trabajadores-form">
+            <label for="Nombre">Nombre</label>
+            <input type="text" name="Nombre" id="Nombre">
+
+            <label for="Apellidop">Apellido Paterno</label>
+            <input type="text" name="Apellidop" id="Apellidop">
+
+            <label for="Apellidom">Apellido Materno</label>
+            <input type="text" name="Apellidom" id="Apellidom">
+
+            <label for="Telefono">Teléfono</label>
+            <input type="tel" name="Telefono" id="Telefono" maxlength="12">
+
+            <label for="Correo">Correo</label>
+            <input type="email" name="Correo" id="Correo">
+
+            <label for="Direccion">Dirección</label>
+            <textarea name="Direccion" id="Direccion"></textarea>
+
+            <label for="Rol">Rol</label>
+            <select name="Rol" id="Rol">
+                <option value="Trabajador">Trabajador</option>
+                <option value="Administrador">Administrador</option>
+                <option value="Limpieza">Limpieza</option>
+            </select>
+
+            <label for="Sueldo">Sueldo</label>
+            <input type="number" name="Sueldo" id="Sueldo">
+            
+            <label for="Edad">Edad</label>
+            <input type="number" name="Edad" id="Edad" maxlength="2">
+            
+            <button type="submit" class="btn-registrar">Insertar</button>
+        </form>
+    </div>
 </body>
 </html>
