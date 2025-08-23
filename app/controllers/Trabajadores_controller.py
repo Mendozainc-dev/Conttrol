@@ -1,11 +1,20 @@
 
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, session
 
 trabajadores_bp = Blueprint('trabajadores', __name__)
+
+# Usar una clave secreta para la sesión (esto debe estar en la app principal, pero aquí es para ejemplo)
+import os
+from flask import current_app
+
 
 
 @trabajadores_bp.route('/Trabajadores', methods=['GET', 'POST'])
 def trabajadores():
+	if 'trabajadores' not in session:
+		session['trabajadores'] = [Mendozainc]
+	trabajadores_lista = session['trabajadores']
+
 	if request.method == 'POST':
 		nombre = request.form.get('Nombre')
 		apellidop = request.form.get('Apellidop')
@@ -17,9 +26,22 @@ def trabajadores():
 		sueldo = request.form.get('Sueldo')
 		edad = request.form.get('Edad')
 		if nombre and apellidop and apellidom and telefono and correo and direccion and rol and edad and sueldo:
+			trabajador = {
+				'nombre': nombre,
+				'apellidop': apellidop,
+				'apellidom': apellidom,
+				'telefono': telefono,
+				'correo': correo,
+				'direccion': direccion,
+				'rol': rol,
+				'sueldo': sueldo,
+				'edad': edad
+			}
+			trabajadores_lista.append(trabajador)
+			session['trabajadores'] = trabajadores_lista
 			mensaje_succes = f"La persona {nombre}, {apellidop}, {apellidom} fue registrado correctamente en el area de {rol} con un sueldo mensual de {sueldo} pesos mexicanos mensuales"
-			return render_template('trabajadores.html', mensaje_succes=mensaje_succes)
+			return render_template('trabajadores.html', mensaje_succes=mensaje_succes, trabajadores=trabajadores_lista)
 		else:
 			mensaje_error = "No se pudo insertar un nuevo trabajador."
-			return render_template('trabajadores.html', mensaje_error=mensaje_error)
-	return render_template('trabajadores.html')
+			return render_template('trabajadores.html', mensaje_error=mensaje_error, trabajadores=trabajadores_lista)
+	return render_template('trabajadores.html', trabajadores=trabajadores_lista)

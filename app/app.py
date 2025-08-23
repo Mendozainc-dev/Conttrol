@@ -5,6 +5,7 @@ from app.controllers.Trabajadores_controller import trabajadores_bp
 
 
 app = Flask(__name__)
+app.secret_key = 'Mendozainc'
 app.register_blueprint(menu_bp)
 app.register_blueprint(trabajadores_bp)
 
