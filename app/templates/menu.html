@@ -3,12 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/style_menu.css">
     <title>Menu</title>
 </head>
 <body>
-    <div>
+    <div class="menu">
         <h1>Menu de Conttrol</h1>
-        
+        <div class="menu_botones">
+            <form action="/administrador" method="get">
+                <button type="submit" id="Administrador" name="administrador">Administrador</button>
+            </form>
+            <form action="/trabajadores" method="get">
+                <button type="submit" id="Trabajadores" name="Trabajadores">Trabajadores</button>
+            </form>
+            <form action="/contaduria" method="get">
+                <button type="submit" id="Contaduria" name="Contaduria">Contaduria</button>
+            </form>
+        </div>
     </div>
 </body>
 </html>

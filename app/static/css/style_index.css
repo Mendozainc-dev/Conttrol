@@ -31,7 +31,7 @@ body {
     input[type="submit"] {
             width: 100%;
             padding: 10px;
-            background: #007bff;
+            background: peru;
             color: #fff;
             border: none;
             border-radius: 4px;
@@ -39,9 +39,7 @@ body {
             cursor: pointer;
             transition: background 0.2s;
     }
-    input[type="submit"]:hover {
-            background: #0056b3;
-}
+    
 .error-mensaje {
             color: #ff0000;
             background: #ffcaca;
