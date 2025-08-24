@@ -3,16 +3,10 @@ from flask import Blueprint, render_template, redirect, url_for, request, sessio
 
 trabajadores_bp = Blueprint('trabajadores', __name__)
 
-# Usar una clave secreta para la sesión (esto debe estar en la app principal, pero aquí es para ejemplo)
-import os
-from flask import current_app
-
-
-
 @trabajadores_bp.route('/Trabajadores', methods=['GET', 'POST'])
 def trabajadores():
 	if 'trabajadores' not in session:
-		session['trabajadores'] = [Mendozainc]
+		session['trabajadores'] = []
 	trabajadores_lista = session['trabajadores']
 
 	if request.method == 'POST':

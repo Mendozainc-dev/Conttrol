@@ -1,11 +1,75 @@
 <!DOCTYPE html>
-<html lang="es>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contaduria</title>
+    <link rel="stylesheet" href="/static/css/style_contaduria.css">
+    <title>Contaduría</title>
 </head>
 <body>
-    
+    <div class="contaduria-container">
+        <div class="formulario-bloque">
+            <h1>Sección de Contaduría</h1>
+            <div class="form-title">Agregar ingresos</div>
+            {% if mensaje_succes %}
+                <div class="mensaje-succes">{{ mensaje_succes }}</div>
+            {% endif %}
+            {% if mensaje_error %}
+                <div class="mensaje-error">{{ mensaje_error }}</div>
+            {% endif %}
+            <form action="/contaduria" method="post" class="contaduria-form">
+                <label for="Descripcion">Descripción del servicio</label>
+                <input type="text" name="Descripcion" id="Descripcion">
+
+                <label for="Producto_Servicio">Producto o Servicio ofrecido</label>
+                <input type="text" name="Producto_Servicio" id="Producto_Servicio">
+
+                <label for="Monto">Monto</label>
+                <input type="number" name="Monto" id="Monto">
+
+                <label for="Metodo_Pago">Método de Pago utilizado</label>
+                <input type="text" name="Metodo_Pago" id="Metodo_Pago">
+
+                <label for="Fecha">Fecha de la transacción</label>
+                <input type="datetime-local" name="Fecha" id="Fecha">
+
+                <label for="Cliente">Cliente o Comprador</label>
+                <input type="text" name="Cliente" id="Cliente">
+
+                <button type="submit" class="btn-registrar">Subir</button>
+            </form>
+        </div>
+        <div class="tabla-bloque">
+            <h2>Lista de Ingresos</h2>
+            <table class="tabla-contaduria">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Producto o Servicio</th>
+                        <th>Monto</th>
+                        <th>Método de Pago</th>
+                        <th>Fecha</th>
+                        <th>Cliente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if ingresos %}
+                        {% for ingreso in ingresos %}
+                        <tr>
+                            <td>{{ ingreso.Descripcion }}</td>
+                            <td>{{ ingreso.Producto_Servicio }}</td>
+                            <td>{{ ingreso.Monto }}</td>
+                            <td>{{ ingreso.Metodo_Pago }}</td>
+                            <td>{{ ingreso.Fecha }}</td>
+                            <td>{{ ingreso.Cliente }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr><td colspan="6" style="text-align:center;">No hay ingresos registrados.</td></tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
