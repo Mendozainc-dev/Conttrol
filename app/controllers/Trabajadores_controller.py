@@ -33,7 +33,7 @@ def trabajadores():
 			}
 			trabajadores_lista.append(trabajador)
 			session['trabajadores'] = trabajadores_lista
-			mensaje_succes = f"La persona {nombre}, {apellidop}, {apellidom} fue registrado correctamente en el area de {rol} con un sueldo mensual de {sueldo} pesos mexicanos mensuales"
+			mensaje_succes = f"La persona {nombre} {apellidop} {apellidom} fue registrado correctamente en el area de {rol} con un sueldo mensual de {sueldo} pesos mexicanos mensuales"
 			return render_template('trabajadores.html', mensaje_succes=mensaje_succes, trabajadores=trabajadores_lista)
 		else:
 			mensaje_error = "No se pudo insertar un nuevo trabajador."

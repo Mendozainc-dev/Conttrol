@@ -30,7 +30,7 @@ def contaduria():
             mensaje_succes = f"El registro de {descripcion} por un monto de {monto} pesos mexicanos a nombre de {cliente} fue registrado correctamente el dia {fecha} con metodo de pago {metodo_pago}"
             return render_template('Contaduria.html', mensaje_succes=mensaje_succes, contaduria=contaduria_lista)
         else:
-            mensaje_error = "No se pudo insertar un nuevo registro en contaduria favor de revisar que todos los campos esten llenos"
+            mensaje_error = "No se pudo insertar un nuevo registro en contaduria"
             return render_template('Contaduria.html', mensaje_error=mensaje_error, contaduria=contaduria_lista)
 
     return render_template('Contaduria.html', contaduria=contaduria_lista)
