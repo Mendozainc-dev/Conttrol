@@ -43,7 +43,8 @@ body {
 }
 .contaduria-form input[type="text"],
 .contaduria-form input[type="number"],
-.contaduria-form input[type="datetime-local"] {
+.contaduria-form input[type="datetime-local"] 
+.contaduria-form select {
 	width: 100%;
 	padding: 8px;
 	margin-bottom: 14px;
@@ -62,9 +63,7 @@ body {
 	cursor: pointer;
 	transition: background 0.2s;
 }
-.btn-registrar:hover {
-	background: #b87333;
-}
+
 .mensaje-succes {
 	color: #155724;
 	background: #d4edda;

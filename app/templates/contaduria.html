@@ -28,7 +28,14 @@
                 <input type="number" name="Monto" id="Monto">
 
                 <label for="Metodo_Pago">Método de Pago utilizado</label>
-                <input type="text" name="Metodo_Pago" id="Metodo_Pago">
+                <select name="Metodo_Pago" id="Metodo_Pago">
+                    option value="Efectivo">Efectivo</option>
+                    <option value="Tarjeta_Credito">Tarjeta de Crédito</option>
+                    <option value="Tarjeta_Debito">Tarjeta de Débito</option>
+                    <option value="Transferencia_Bancaria">Transferencia Bancaria</option>
+                    <option value="PayPal">PayPal</option>
+                    <option value="Otro">Otro</option>
+                </select>
 
                 <label for="Fecha">Fecha de la transacción</label>
                 <input type="datetime-local" name="Fecha" id="Fecha">
@@ -64,8 +71,6 @@
                             <td>{{ ingreso.Cliente }}</td>
                         </tr>
                         {% endfor %}
-                    {% else %}
-                        <tr><td colspan="6" style="text-align:center;">No hay ingresos registrados.</td></tr>
                     {% endif %}
                 </tbody>
             </table>
