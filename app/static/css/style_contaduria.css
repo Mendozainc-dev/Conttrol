@@ -43,7 +43,7 @@ body {
 }
 .contaduria-form input[type="text"],
 .contaduria-form input[type="number"],
-.contaduria-form input[type="datetime-local"] 
+.contaduria-form input[type="datetime-local"],
 .contaduria-form select {
 	width: 100%;
 	padding: 8px;
