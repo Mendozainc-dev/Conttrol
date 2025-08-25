@@ -1,0 +1,220 @@
+body {
+	background: #f2f2f2;
+	font-family: Arial, sans-serif;
+}
+.administracion-container {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	width: 100%;
+	margin: 30px auto;
+	align-items: flex-start;
+	padding: 0 20px;
+	box-sizing: border-box;
+}
+.formulario-bloque {
+	background: #fff;
+	width: 350px;
+	padding: 32px;
+	border-radius: 8px;
+	flex-shrink: 0;
+}
+.tabla-bloque {
+	flex: 1;
+	min-width: 0;
+	background: #fff;
+	border-radius: 8px;
+	padding: 30px;
+	overflow-x: auto;
+}
+.formulario-bloque h1 {
+	text-align: left;
+	color: #333;
+	margin-bottom: 18px;
+}
+.form-title {
+	text-align: left;
+	font-size: 18px;
+	margin-bottom: 18px;
+	color: #444;
+}
+.administracion-form label {
+	display: block;
+	margin-bottom: 6px;
+	color: #444;
+}
+.administracion-form input[type="text"] {
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 14px;
+	border: 1px solid peru;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+.btn-registrar {
+	width: 100%;
+	padding: 10px;
+	background: peru;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.btn-registrar:hover {
+	background: #b87333;
+}
+.mensaje-succes {
+	color: #155724;
+	background: #d4edda;
+	border: 1px solid #c3e6cb;
+	padding: 8px;
+	border-radius: 4px;
+	margin-bottom: 16px;
+	text-align: center;
+}
+.mensaje-error {
+	color: #721c24;
+	background: #f8d7da;
+	border: 1px solid #f5c6cb;
+	padding: 8px;
+	border-radius: 4px;
+	margin-bottom: 16px;
+	text-align: center;
+}
+.tabla-bloque h2 {
+	text-align: left;
+	color: #333;
+	margin-bottom: 16px;
+}
+.tabla-administracion {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 15px;
+}
+.tabla-administracion th, .tabla-administracion td {
+	border: 1px solid #ddd;
+	padding: 8px 6px;
+	text-align: left;
+}
+.tabla-administracion th {
+	background: peru;
+	color: #fff;
+}
+.tabla-administracion tr:nth-child(even) {
+	background: #f9f9f9;
+}
+.tabla-administracion tr:hover {
+	background: #f1f1f1;
+}
+body {
+	background: #f2f2f2;
+	font-family: Arial, sans-serif;
+}
+.administracion-container {
+	display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;         
+    margin: 30px auto;
+    align-items: flex-start;
+    padding: 0 20px;    
+    box-sizing: border-box;
+}
+.formulario-bloque {
+	background: #fff;
+    width: 350px;         
+    padding: 32px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+.tabla-bloque {
+	flex: 1;           
+    min-width: 0;        
+    background: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    overflow-x: auto; 
+}
+.formulario-bloque h1 {
+	text-align: left;
+	color: #333;
+	margin-bottom: 18px;
+}
+.form-title {
+	text-align: left;
+	font-size: 18px;
+	margin-bottom: 18px;
+	color: #444;
+}
+.administracion-form label {
+	display: block;
+	margin-bottom: 6px;
+	color: #444;
+}
+.administracion-form input[type="text"] {
+	width: 100%;
+	padding: 8px;
+	margin-bottom: 14px;
+	border: 1px solid peru;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+.btn-registrar {
+	width: 100%;
+	padding: 10px;
+	background: peru;
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background 0.2s;
+}
+.btn-registrar:hover {
+	background: #b87333;
+}
+.mensaje-succes {
+	color: #155724;
+	background: #d4edda;
+	border: 1px solid #c3e6cb;
+	padding: 8px;
+	border-radius: 4px;
+	margin-bottom: 16px;
+	text-align: center;
+}
+.mensaje-error {
+	color: #721c24;
+	background: #f8d7da;
+	border: 1px solid #f5c6cb;
+	padding: 8px;
+	border-radius: 4px;
+	margin-bottom: 16px;
+	text-align: center;
+}
+.tabla-bloque h2 {
+	text-align: left;
+	color: #333;
+	margin-bottom: 16px;
+}
+.tabla-administracion {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 15px;
+}
+.tabla-administracion th, .tabla-administracion td {
+	border: 1px solid #ddd;
+	padding: 8px 6px;
+	text-align: left;
+}
+.tabla-administracion th {
+	background: peru;
+	color: #fff;
+}
+.tabla-administracion tr:nth-child(even) {
+	background: #f9f9f9;
+}
+.tabla-administracion tr:hover {
+	background: #f1f1f1;
+}

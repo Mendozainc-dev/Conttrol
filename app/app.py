@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from app.controllers.menu_controller import menu_bp
 from app.controllers.Trabajadores_controller import trabajadores_bp
 from app.controllers.Contaduria_controller import contaduria_bp
+from app.controllers.administracion_controller import administracion_bp
 
 
 app = Flask(__name__)
@@ -10,6 +11,7 @@ app.secret_key = 'Mendozainc'
 app.register_blueprint(menu_bp)
 app.register_blueprint(trabajadores_bp)
 app.register_blueprint(contaduria_bp)
+app.register_blueprint(administracion_bp)
 
 @app.route('/')
 def index():

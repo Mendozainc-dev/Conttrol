@@ -3,26 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador</title>
+    <link rel="stylesheet" href="/static/css/style_administracion.css">
+    <title>Administración</title>
 </head>
 <body>
-    <div>
-        <h1>Sección de Administrador</h1>
-        <p>Administrador de CONTTROL</p>
-    </div>
-    <form action="/administrador">
-        <div>
-            <label for="Gestion">gestión</label>
-            <input type="text" id="Gestion" name="Gestión">
-            <label for="Roles">roles</label>
-            <input type="text" id="Roles" name="Roles">
-            <label for="Empresa">empresa</label>
-            <input type="text" id="Empresa" name="Empresa">
-            <label for="Informes">informes</label>
-            <input type="text" id="Informes" name="Informes">
-            <label for="Usuarios">usuarios</label>
-            <input type="text" id="Usuarios" name="Usuarios">
+    <div class="administracion-container">
+        <div class="formulario-bloque">
+            <h1>Sección de Administración</h1>
+            <div class="form-title">Agregar registro</div>
+            {% if mensaje_succes %}
+                <div class="mensaje-succes">{{ mensaje_succes }}</div>
+            {% endif %}
+            {% if mensaje_error %}
+                <div class="mensaje-error">{{ mensaje_error }}</div>
+            {% endif %}
+            <form action="{{ url_for('administracion.administracion') }}" method="post" class="administracion-form">
+                <label for="Gestion">Gestión</label>
+                <input type="text" id="Gestion" name="Gestion">
+                <label for="Roles">Roles</label>
+                <input type="text" id="Roles" name="Roles">
+                <label for="Empresa">Empresa</label>
+                <input type="text" id="Empresa" name="Empresa">
+                <label for="Informes">Informes</label>
+                <input type="text" id="Informes" name="Informes">
+                <label for="Usuarios">Usuarios</label>
+                <input type="text" id="Usuarios" name="Usuarios">
+                <button type="submit" class="btn-registrar">Insertar</button>
+            </form>
         </div>
-    </form>
+        <div class="tabla-bloque">
+            <h2>Registros de Administración</h2>
+            <table class="tabla-administracion">
+                <thead>
+                    <tr>
+                        <th>Gestión</th>
+                        <th>Roles</th>
+                        <th>Empresa</th>
+                        <th>Informes</th>
+                        <th>Usuarios</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if administracion %}
+                        {% for a in administracion %}
+                        <tr>
+                            <td>{{ a.gestion }}</td>
+                            <td>{{ a.roles }}</td>
+                            <td>{{ a.empresa }}</td>
+                            <td>{{ a.informes }}</td>
+                            <td>{{ a.usuarios }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
