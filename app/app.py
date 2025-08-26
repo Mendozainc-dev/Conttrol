@@ -19,6 +19,10 @@ db.create_tables()
 def index():
     return render_template("index.html")
 
+@app.route('/Manual')
+def manual():
+    return render_template("manual.html")
+
 @app.route('/Login', methods=['POST'])
 def login(): 
     usuario = request.form.get('Usuario')

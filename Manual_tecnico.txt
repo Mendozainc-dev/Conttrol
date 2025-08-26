@@ -1,0 +1,605 @@
+================================================================================
+                           MANUAL TÉCNICO - SISTEMA CONTTROL
+================================================================================
+
+1. INFORMACIÓN GENERAL DEL PROYECTO
+================================================================================
+
+Nombre del Sistema: CONTTROL
+Versión: 1.0
+Lenguaje de Programación: Python 3.x
+Framework Web: Flask 3.1.2
+Base de Datos: SQLite
+Arquitectura: MVC (Model-View-Controller)
+Desarrollador: Mendoza Inc.
+
+Descripción: Sistema de gestión empresarial que permite administrar trabajadores,
+contabilidad y operaciones de una empresa de manera eficiente.
+
+2. ARQUITECTURA DEL SISTEMA
+================================================================================
+
+2.1 Estructura de Directorios:
+```
+Conttrol/
+├── app/
+│   ├── __init__.py
+│   ├── app.py                    # Archivo principal de la aplicación
+│   ├── controllers/              # Controladores (Lógica de negocio)
+│   │   ├── __init__.py
+│   │   ├── administracion_controller.py
+│   │   ├── Contaduria_controller.py
+│   │   ├── menu_controller.py
+│   │   └── Trabajadores_controller.py
+│   ├── db/                       # Capa de base de datos
+│   │   ├── __init__.py
+│   │   └── database.py
+│   ├── models/                   # Modelos de datos
+│   │   ├── __init__.py
+│   │   ├── trabajador.py
+│   │   └── usuario.py
+│   ├── static/                   # Archivos estáticos
+│   │   └── css/
+│   │       ├── style_administracion.css
+│   │       ├── style_contaduria.css
+│   │       ├── style_index.css
+│   │       ├── style_manual.css
+│   │       ├── style_menu.css
+│   │       └── style_trabajadores.css
+│   └── templates/                # Plantillas HTML
+│       ├── administrador.html
+│       ├── contaduria.html
+│       ├── index.html
+│       ├── manual.html
+│       ├── menu.html
+│       └── trabajadores.html
+├── conttrol.db                   # Base de datos SQLite
+├── crear_usuarios.py            # Script para crear usuarios iniciales
+├── venv/                        # Entorno virtual de Python
+├── README.md
+├── README_POO.md
+└── LICENSE
+```
+
+2.2 Patrón de Diseño:
+- Modelo-Vista-Controlador (MVC)
+- Blueprint Pattern (Flask Blueprints)
+- Decorator Pattern (login_required)
+- Singleton Pattern (Database class)
+
+3. COMPONENTES PRINCIPALES
+================================================================================
+
+3.1 Archivo Principal (app/app.py):
+- Configuración de Flask
+- Registro de blueprints
+- Rutas principales (/, /Login, /Manual, /logout)
+- Gestión de sesiones
+- Autenticación de usuarios
+
+3.2 Base de Datos (app/db/database.py):
+- Clase Database para manejo de SQLite
+- Métodos: connect(), disconnect(), create_tables(), execute()
+- Tablas: trabajadores, usuarios
+- Manejo de transacciones y consultas
+
+3.3 Modelos de Datos:
+
+3.3.1 Usuario (app/models/usuario.py):
+- Atributos: id, usuario, contraseña, rol
+- Métodos: save(), authenticate(), get_all(), is_admin(), to_dict()
+- Autenticación de usuarios
+- Gestión de roles
+
+3.3.2 Trabajador (app/models/trabajador.py):
+- Atributos: id, nombre, apellidop, apellidom, telefono, correo, direccion, rol, sueldo, edad
+- Métodos: save(), get_all(), get_nombre_completo(), to_dict()
+- CRUD completo para trabajadores
+
+3.4 Controladores:
+
+3.4.1 Menu Controller (app/controllers/menu_controller.py):
+- Rutas: /menu, /administrador, /trabajadores, /contaduria
+- Decorador login_required para protección de rutas
+- Renderizado de plantillas principales
+
+3.4.2 Trabajadores Controller (app/controllers/Trabajadores_controller.py):
+- Ruta: /Trabajadores (GET, POST)
+- Registro de nuevos trabajadores
+- Validación de formularios
+- Listado de trabajadores existentes
+
+3.4.3 Contaduría Controller (app/controllers/Contaduria_controller.py):
+- Ruta: /Contaduria (GET, POST)
+- Gestión de ingresos financieros
+- Almacenamiento en sesión
+- Registro de transacciones
+
+3.4.4 Administración Controller (app/controllers/administracion_controller.py):
+- Ruta: /Administracion (GET, POST)
+- Gestión administrativa
+- Configuración de roles y usuarios
+- Generación de informes
+
+4. BASE DE DATOS
+================================================================================
+
+4.1 Tabla: trabajadores
+```sql
+CREATE TABLE trabajadores (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL,
+    apellidop TEXT NOT NULL,
+    apellidom TEXT NOT NULL,
+    telefono TEXT NOT NULL,
+    correo TEXT NOT NULL,
+    direccion TEXT NOT NULL,
+    rol TEXT NOT NULL,
+    sueldo REAL NOT NULL,
+    edad INTEGER NOT NULL
+);
+```
+
+4.2 Tabla: usuarios
+```sql
+CREATE TABLE usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    usuario TEXT UNIQUE NOT NULL,
+    contraseña TEXT NOT NULL,
+    rol TEXT NOT NULL
+);
+```
+
+4.3 Usuarios por Defecto:
+- admin/admin123 (Administrador)
+- usuario/usuario123 (Usuario)
+- contador/contador123 (Contador)
+
+5. SISTEMA DE AUTENTICACIÓN
+================================================================================
+
+5.1 Flujo de Autenticación:
+1. Usuario accede a la página de login (/)
+2. Ingresa credenciales (usuario/contraseña)
+3. Sistema valida contra base de datos
+4. Si es válido, crea sesión con datos del usuario
+5. Redirige al menú principal (/menu)
+
+5.2 Gestión de Sesiones:
+- Secret Key: 'Mendozainc'
+- Variables de sesión:
+  * user_id: ID del usuario
+  * username: Nombre de usuario
+  * user_role: Rol del usuario
+  * is_authenticated: Estado de autenticación
+
+5.3 Protección de Rutas:
+- Decorador @login_required
+- Verificación de sesión activa
+- Redirección automática al login si no autenticado
+
+6. INTERFAZ DE USUARIO
+================================================================================
+
+6.1 Páginas Principales:
+- index.html: Página de login
+- menu.html: Menú principal del sistema
+- trabajadores.html: Gestión de trabajadores
+- contaduria.html: Gestión financiera
+- administrador.html: Panel administrativo
+- manual.html: Manual de usuario
+
+6.2 Estilos CSS:
+- Archivos CSS separados por módulo
+- Diseño responsive
+- Paleta de colores: Naranja (#FF6600), Azul (#3498db)
+- Tipografía: Segoe UI, Arial
+
+6.3 Formularios:
+- Validación del lado del cliente y servidor
+- Mensajes de éxito y error
+- Campos requeridos marcados
+
+7. FUNCIONALIDADES POR MÓDULO
+================================================================================
+
+7.1 Módulo de Trabajadores:
+- Registro de nuevos empleados
+- Información personal completa
+- Gestión de roles y salarios
+- Listado de trabajadores
+- Validación de datos
+
+7.2 Módulo de Contaduría:
+- Registro de ingresos
+- Información de transacciones
+- Métodos de pago
+- Historial de movimientos
+- Almacenamiento en sesión
+
+7.3 Módulo de Administración:
+- Gestión de usuarios
+- Configuración de roles
+- Informes del sistema
+- Configuración empresarial
+- Panel de control
+
+8. SEGURIDAD
+================================================================================
+
+8.1 Medidas Implementadas:
+- Autenticación obligatoria
+- Protección de rutas sensibles
+- Validación de formularios
+- Escape de datos de entrada
+- Gestión segura de sesiones
+
+8.2 Recomendaciones de Seguridad:
+- Cambiar contraseñas por defecto
+- Implementar HTTPS en producción
+- Validación adicional de datos
+- Logs de auditoría
+- Backup regular de base de datos
+
+9. DESPLIEGUE Y CONFIGURACIÓN
+================================================================================
+
+9.1 Requisitos del Sistema:
+- Python 3.7 o superior
+- Flask 3.1.2
+- SQLite3 (incluido con Python)
+- Navegador web moderno
+
+9.2 Instalación:
+```bash
+# Clonar repositorio
+git clone [URL_DEL_REPOSITORIO]
+
+# Crear entorno virtual
+python -m venv venv
+
+# Activar entorno virtual
+# Windows:
+venv\Scripts\activate
+# Linux/Mac:
+source venv/bin/activate
+
+# Instalar dependencias
+pip install flask
+
+# Crear usuarios iniciales
+python crear_usuarios.py
+
+# Ejecutar aplicación
+python -m app.app
+```
+
+9.3 Configuración de Producción:
+- Usar WSGI server (Gunicorn, uWSGI)
+- Configurar proxy reverso (Nginx)
+- Habilitar HTTPS
+- Configurar base de datos externa
+- Implementar logging
+
+10. MANTENIMIENTO Y SOPORTE
+================================================================================
+
+10.1 Tareas de Mantenimiento:
+- Backup diario de base de datos
+- Limpieza de logs
+- Actualización de dependencias
+- Monitoreo de rendimiento
+- Verificación de integridad de datos
+
+10.2 Troubleshooting Común:
+- Error de conexión a base de datos
+- Problemas de autenticación
+- Errores de formularios
+- Problemas de sesión
+- Errores de renderizado
+
+10.3 Logs y Monitoreo:
+- Logs de Flask (debug mode)
+- Logs de errores de aplicación
+- Monitoreo de acceso
+- Métricas de rendimiento
+
+11. DESARROLLO FUTURO
+================================================================================
+
+11.1 Mejoras Propuestas:
+- Implementar base de datos PostgreSQL
+- Agregar sistema de reportes avanzados
+- Implementar API REST
+- Agregar sistema de notificaciones
+- Implementar auditoría completa
+- Agregar módulo de inventario
+- Implementar sistema de backup automático
+
+11.2 Escalabilidad:
+- Arquitectura microservicios
+- Base de datos distribuida
+- Cache distribuido (Redis)
+- Load balancing
+- Containerización (Docker)
+
+12. DIAGRAMAS DEL SISTEMA
+================================================================================
+
+12.1 Diagrama de Navegación:
+
+```
+                    ┌─────────────────┐
+                    │   Página Login  │
+                    │     (index)     │
+                    └─────────┬───────┘
+                              │
+                    ┌─────────▼───────┐
+                    │   Autenticación │
+                    │   (POST /Login) │
+                    └─────────┬───────┘
+                              │
+                    ┌─────────▼───────┐
+                    │  Menú Principal │
+                    │    (/menu)      │
+                    └─────────┬───────┘
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+┌───────▼────────┐    ┌───────▼────────┐    ┌───────▼────────┐
+│   Trabajadores │    │   Contaduría   │    │ Administración │
+│  (/Trabajadores)│    │   (/Contaduria) │    │ (/Administracion)│
+└────────────────┘    └────────────────┘    └────────────────┘
+
+┌─────────────────┐
+│   Manual        │
+│   (/Manual)     │
+└─────────────────┘
+
+┌─────────────────┐
+│   Logout        │
+│   (/logout)     │
+└─────────────────┘
+```
+
+12.2 Diagrama de Clases:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         SISTEMA CONTTROL                        │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                           FLASK APP                             │
+├─────────────────────────────────────────────────────────────────┤
+│ - app: Flask                                                    │
+│ - secret_key: 'Mendozainc'                                     │
+│ - register_blueprint()                                          │
+│ - run(debug=True, port=5000)                                   │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         BLUEPRINTS                              │
+├─────────────────────────────────────────────────────────────────┤
+│ menu_bp                    │ trabajadores_bp                   │
+│ - /menu                    │ - /Trabajadores                   │
+│ - /administrador           │ - GET, POST                       │
+│ - /trabajadores            │ - login_required                  │
+│ - /contaduria              │                                   │
+│ - login_required           │                                   │
+│                            │                                   │
+│ contaduria_bp              │ administracion_bp                 │
+│ - /Contaduria              │ - /Administracion                 │
+│ - GET, POST                │ - GET, POST                       │
+│ - login_required           │ - login_required                  │
+│ - session storage          │ - session storage                 │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                           MODELS                                │
+├─────────────────────────────────────────────────────────────────┤
+│ Usuario                                                         │
+├─────────────────────────────────────────────────────────────────┤
+│ - id: int                                                       │
+│ - usuario: str                                                  │
+│ - contraseña: str                                               │
+│ - rol: str                                                      │
+├─────────────────────────────────────────────────────────────────┤
+│ + __init__(usuario, contraseña, rol, id)                       │
+│ + save(): bool                                                  │
+│ + authenticate(usuario, contraseña): Usuario                   │
+│ + get_all(): List[Usuario]                                     │
+│ + is_admin(): bool                                             │
+│ + to_dict(): dict                                              │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│ Trabajador                                                      │
+├─────────────────────────────────────────────────────────────────┤
+│ - id: int                                                       │
+│ - nombre: str                                                   │
+│ - apellidop: str                                                │
+│ - apellidom: str                                                │
+│ - telefono: str                                                 │
+│ - correo: str                                                   │
+│ - direccion: str                                                │
+│ - rol: str                                                      │
+│ - sueldo: float                                                 │
+│ - edad: int                                                     │
+├─────────────────────────────────────────────────────────────────┤
+│ + __init__(nombre, apellidop, apellidom, telefono, correo,      │
+│           direccion, rol, sueldo, edad, id)                    │
+│ + save(): bool                                                  │
+│ + get_all(): List[Trabajador]                                  │
+│ + get_nombre_completo(): str                                   │
+│ + to_dict(): dict                                              │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         DATABASE                                │
+├─────────────────────────────────────────────────────────────────┤
+│ Database                                                        │
+├─────────────────────────────────────────────────────────────────┤
+│ - db_name: str                                                  │
+│ - connection: sqlite3.Connection                                │
+│ - cursor: sqlite3.Cursor                                        │
+├─────────────────────────────────────────────────────────────────┤
+│ + __init__(db_name)                                             │
+│ + connect(): bool                                               │
+│ + disconnect()                                                  │
+│ + create_tables()                                               │
+│ + execute(query, params): Any                                  │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         TEMPLATES                               │
+├─────────────────────────────────────────────────────────────────┤
+│ index.html          │ menu.html          │ trabajadores.html    │
+│ - Login form        │ - Main menu        │ - Worker form        │
+│ - Error messages    │ - Navigation       │ - Worker list        │
+│                     │ - User info        │ - Success/Error      │
+│                     │                    │                      │
+│ contaduria.html     │ administrador.html │ manual.html          │
+│ - Income form       │ - Admin panel      │ - User manual        │
+│ - Transaction list  │ - User management  │ - Documentation      │
+│ - Success/Error     │ - Reports          │ - Navigation         │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                         STATIC FILES                            │
+├─────────────────────────────────────────────────────────────────┤
+│ style_index.css     │ style_menu.css      │ style_trabajadores.css │
+│ - Login styles      │ - Menu styles       │ - Worker styles       │
+│                     │                     │                        │
+│ style_contaduria.css│ style_administracion.css │ style_manual.css │
+│ - Finance styles    │ - Admin styles      │ - Manual styles       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+12.3 Diagrama de Flujo de Autenticación:
+
+```
+┌─────────────┐
+│   Usuario   │
+│   accede    │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│  Página     │
+│   Login     │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│  Ingresa    │
+│credenciales │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│   POST      │
+│  /Login     │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│ Valida en   │
+│   BD        │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│ ¿Válidas?   │
+└──────┬──────┘
+       │
+   ┌───▼───┐
+   │  NO   │
+   └───┬───┘
+       │
+       ▼
+┌─────────────┐
+│  Error      │
+│  Mensaje    │
+└─────────────┘
+
+   ┌───▼───┐
+   │  SÍ   │
+   └───┬───┘
+       │
+       ▼
+┌─────────────┐
+│  Crea       │
+│  Sesión     │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────┐
+│  Redirige   │
+│  a /menu    │
+└─────────────┘
+```
+
+12.4 Diagrama de Base de Datos:
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         CONTTROL.DB                             │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                        TABLA: usuarios                          │
+├─────────────────────────────────────────────────────────────────┤
+│ PK │ id          │ INTEGER │ PRIMARY KEY │ AUTOINCREMENT        │
+│    │ usuario     │ TEXT    │ UNIQUE      │ NOT NULL             │
+│    │ contraseña  │ TEXT    │             │ NOT NULL             │
+│    │ rol         │ TEXT    │             │ NOT NULL             │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                      TABLA: trabajadores                        │
+├─────────────────────────────────────────────────────────────────┤
+│ PK │ id          │ INTEGER │ PRIMARY KEY │ AUTOINCREMENT        │
+│    │ nombre      │ TEXT    │             │ NOT NULL             │
+│    │ apellidop   │ TEXT    │             │ NOT NULL             │
+│    │ apellidom   │ TEXT    │             │ NOT NULL             │
+│    │ telefono    │ TEXT    │             │ NOT NULL             │
+│    │ correo      │ TEXT    │             │ NOT NULL             │
+│    │ direccion   │ TEXT    │             │ NOT NULL             │
+│    │ rol         │ TEXT    │             │ NOT NULL             │
+│    │ sueldo      │ REAL    │             │ NOT NULL             │
+│    │ edad        │ INTEGER │             │ NOT NULL             │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                        RELACIONES                               │
+├─────────────────────────────────────────────────────────────────┤
+│ usuarios (1) ──────┐                                            │
+│                     │                                            │
+│ trabajadores (N) ───┘                                            │
+│                     │                                            │
+│ Relación: Un usuario puede gestionar múltiples trabajadores     │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+13. DOCUMENTACIÓN ADICIONAL
+================================================================================
+
+13.1 Archivos de Documentación:
+- README.md: Guía de instalación y uso
+- README_POO.md: Documentación de programación orientada a objetos
+- Manual_tecnico.txt: Este manual técnico
+
+13.2 Recursos Adicionales:
+- Documentación oficial de Flask
+- Guías de SQLite
+- Mejores prácticas de seguridad web
+- Patrones de diseño en Python
+
+================================================================================
+                            FIN DEL MANUAL TÉCNICO
+================================================================================
+
+Fecha de Creación: Agosto 2025
+Versión del Manual: 1.0
+Última Actualización: Agosto 2025
