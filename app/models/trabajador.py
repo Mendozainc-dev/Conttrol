@@ -26,7 +26,6 @@ class Trabajador:
         
         result = db.execute(query, params)
         if result is not None:
-            # Obtener el ID asignado
             self.id = db.execute("SELECT last_insert_rowid()")[0][0]
             return True
         return False

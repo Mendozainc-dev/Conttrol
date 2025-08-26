@@ -22,7 +22,7 @@ class Database:
     
     def create_tables(self):
         if self.connect():
-            # Tabla de trabajadores
+          
             self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS trabajadores (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -64,5 +64,4 @@ class Database:
             print(f"Error en query: {e}")
             return None
 
-# Instancia global
 db = Database()

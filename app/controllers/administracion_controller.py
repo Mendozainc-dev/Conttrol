@@ -2,8 +2,16 @@ from flask import Flask, render_template, redirect, request, url_for, session, B
 
 administracion_bp = Blueprint('administracion', __name__)
 
-@administracion_bp.route('/Administracion' , methods=['GET', 'POST'])
+def login_required(f):
+    def decorated_function(*args, **kwargs):
+        if not session.get('is_authenticated'):
+            return redirect(url_for('index'))
+        return f(*args, **kwargs)
+    decorated_function.__name__ = f.__name__
+    return decorated_function
 
+@administracion_bp.route('/Administracion' , methods=['GET', 'POST'])
+@login_required
 def administracion():
     if 'administracion' not in session:
         session['administracion'] = []
@@ -25,7 +33,7 @@ def administracion():
             }
             administracion_lista.append(administracion)
             session['administracion'] = administracion_lista
-            mensaje_succes = f'El tipo de gestión {gestion}, roles {roles} y empresa {empresa} se registraron correctamente, además los informes {informes} y el usuario {usuarios} están definidos correctamente.'
+            mensaje_succes = f'El tipo de gestión {gestion} roles {roles} y empresa {empresa} se registraron correctamente, además los informes {informes} y el usuario {usuarios} están definidos correctamente'
             return render_template('administrador.html', mensaje_succes=mensaje_succes, administracion=administracion_lista)
         else:
             mensaje_error = "No se pudo insertar el registro en administración."

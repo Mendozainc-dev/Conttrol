@@ -2,7 +2,16 @@ from flask import Flask, render_template, redirect,request,url_for, session, Blu
 
 contaduria_bp = Blueprint('contaduria', __name__)
 
-@contaduria_bp.route('/contaduria', methods=['GET', 'POST'])
+def login_required(f):
+    def decorated_function(*args, **kwargs):
+        if not session.get('is_authenticated'):
+            return redirect(url_for('index'))
+        return f(*args, **kwargs)
+    decorated_function.__name__ = f.__name__
+    return decorated_function
+
+@contaduria_bp.route('/Contaduria', methods=['GET', 'POST'])
+@login_required
 def contaduria():
     if 'contaduria' not in session:
         session['contaduria'] = []
